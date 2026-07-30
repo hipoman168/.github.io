@@ -1,4 +1,110 @@
 </> css 
 body{
     background:red;
+   
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    background:#0d0d0d;
+    color:white;
+    font-family:'Noto Sans TC',sans-serif;
+
+}
+
+.hero{
+
+    height:100vh;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    text-align:center;
+
+    padding:30px;
+
+    background:
+    radial-gradient(circle at top,#222,#111,#000);
+
+}
+
+h1{
+
+    font-size:72px;
+
+    font-family:'Noto Serif TC',serif;
+
+    margin-bottom:20px;
+
+}
+
+.subtitle{
+
+    font-size:24px;
+
+    color:#bfbfbf;
+
+    margin-bottom:15px;
+
+}
+
+.desc{
+
+    max-width:720px;
+
+    line-height:1.8;
+
+    color:#9f9f9f;
+
+    margin-bottom:60px;
+
+}
+
+.start-btn{
+
+    background:white;
+
+    color:black;
+
+    border:none;
+
+    padding:18px 60px;
+
+    border-radius:50px;
+
+    font-size:20px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.start-btn:hover{
+
+    transform:translateY(-4px);
+
+    background:#dddddd;
+
+}
+
+.footer{
+
+    position:absolute;
+
+    bottom:30px;
+
+    color:#666;
+
+    font-size:14px;
+
+
 }
