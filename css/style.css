@@ -345,3 +345,199 @@ body {
         font-size: 16px;
     }
 }
+/* ==============================
+   TrueLife 分析結果頁
+============================== */
+
+[hidden] {
+    display: none !important;
+}
+
+.result-heading {
+    margin-bottom: 32px;
+    text-align: center;
+}
+
+.result-heading h1 {
+    margin-bottom: 16px;
+    font-family: "Noto Serif TC", serif;
+    font-size: clamp(32px, 6vw, 52px);
+}
+
+.result-heading p {
+    color: #aaaaaa;
+    line-height: 1.9;
+}
+
+.result-kicker {
+    margin-bottom: 8px;
+    color: #777777 !important;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+.result-summary-card,
+.chart-card,
+.comment-card {
+    margin-top: 24px;
+    padding: 30px;
+    border: 1px solid #303030;
+    border-radius: 20px;
+    background: #161616;
+    text-align: left;
+}
+
+.result-summary-card > span {
+    color: #888888;
+    font-size: 14px;
+}
+
+.result-summary-card h2 {
+    margin: 8px 0 14px;
+    font-family: "Noto Serif TC", serif;
+    font-size: clamp(26px, 5vw, 40px);
+}
+
+.result-summary-card p,
+.comment-card p {
+    color: #bcbcbc;
+    line-height: 1.95;
+}
+
+.chart-card h2,
+.dimension-section h2,
+.comment-card h2 {
+    margin-bottom: 20px;
+    font-family: "Noto Serif TC", serif;
+    font-size: 24px;
+}
+
+.chart-wrapper {
+    position: relative;
+    width: 100%;
+    height: 430px;
+}
+
+.dimension-section {
+    margin-top: 36px;
+    text-align: left;
+}
+
+.dimension-results {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.dimension-card {
+    padding: 22px;
+    border: 1px solid #303030;
+    border-radius: 16px;
+    background: #151515;
+}
+
+.dimension-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.dimension-card h3 {
+    font-size: 18px;
+}
+
+.dimension-card strong {
+    font-family: "Noto Serif TC", serif;
+    font-size: 26px;
+}
+
+.dimension-card p {
+    margin-top: 14px;
+    color: #999999;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.dimension-meter {
+    width: 100%;
+    height: 6px;
+    margin-top: 14px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: #303030;
+}
+
+.dimension-meter span {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: #ffffff;
+}
+
+.result-notice {
+    margin-top: 24px;
+    padding: 18px;
+    border-left: 3px solid #555555;
+    background: rgba(255, 255, 255, 0.025);
+    color: #777777;
+    font-size: 13px;
+    line-height: 1.8;
+    text-align: left;
+}
+
+.result-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 34px;
+}
+
+.primary-button {
+    padding: 15px 38px;
+    border: none;
+    border-radius: 999px;
+    background: #ffffff;
+    color: #111111;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.primary-button:hover {
+    background: #dddddd;
+}
+
+.secondary-link {
+    display: inline-block;
+    margin-top: 20px;
+    color: #999999;
+    text-decoration: none;
+}
+
+.secondary-link:hover {
+    color: #ffffff;
+}
+
+@media (max-width: 640px) {
+    .result-summary-card,
+    .chart-card,
+    .comment-card {
+        padding: 22px 18px;
+    }
+
+    .chart-wrapper {
+        height: 340px;
+    }
+
+    .dimension-results {
+        grid-template-columns: 1fr;
+    }
+
+    .dimension-card {
+        padding: 19px;
+    }
+}
