@@ -1,3 +1,6 @@
-  function startTest() {
-    alert("下一步將進入第一題。");
+  "use strict";
+
+function startTest() {
+    alert("即將開始 TrueLife 測驗！");
+    window.location.href = "test.html";
 }
