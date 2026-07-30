@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TrueLife 真實人生｜人生選擇測驗</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <header class="header">
+        <h1>TrueLife 真實人生</h1>
+        <p>每一個選擇，都定義真正的你。</p>
+    </header>
+
+    <section class="progress-section">
+
+        <div class="progress-text">
+            <span id="current-question">1</span>
+            /
+            <span id="total-question">31</span>
+        </div>
+
+        <div class="progress-bar">
+            <div id="progress-fill" class="progress-fill"></div>
+        </div>
+
+    </section>
+
+    <section id="question-container">
+
+        <h2 id="question-title">
+            題目載入中...
+        </h2>
+
+        <p id="question-text">
+            請稍候...
+        </p>
+
+        <div class="button-group">
+
+            <button
+                id="option-a"
+                class="choice-btn"
+                type="button">
+                A
+            </button>
+
+            <button
+                id="option-b"
+                class="choice-btn"
+                type="button">
+                B
+            </button>
+
+        </div>
+
+    </section>
+
+    <section
+        id="result-container"
+        style="display:none;">
+
+        <h1>
+            🎉 測驗完成
+        </h1>
+
+        <p>
+            你已經完成所有人生選擇。
+        </p>
+
+        <p>
+            每一個選擇，都定義真正的你。
+        </p>
+
+        <button
+            id="restart-button"
+            type="button">
+            重新測驗
+        </button>
+
+        <br><br>
+
+        <a href="index.html">
+            返回首頁
+        </a>
+
+    </section>
+
+</div>
+
+<script src="js/test.js"></script>
+
+</body>
+</html>
