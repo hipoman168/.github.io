@@ -1,68 +1,347 @@
-</> css 
-{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+/* ==============================
+   TrueLife 真實人生
+   全站共用樣式
+============================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-body{
-    background:#0d0d0d;
-    color:white;
-    font-family:'Noto Sans TC',sans-serif;
+html {
+    scroll-behavior: smooth;
 }
 
-.hero{
-    height:100vh;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    text-align:center;
-    padding:30px;
+body {
+    min-height: 100vh;
     background:
-    radial-gradient(circle at top,#222,#111,#000);
+        radial-gradient(circle at top, #222222 0%, #111111 45%, #000000 100%);
+    color: #ffffff;
+    font-family: "Noto Sans TC", sans-serif;
+    line-height: 1.7;
 }
 
-h1{
-    font-size:72px;
-    font-family:'Noto Serif TC',serif;
-    margin-bottom:20px;
+/* ==============================
+   首頁
+============================== */
+
+.hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 40px 24px 90px;
 }
 
-.subtitle{
-    font-size:24px;
-    color:#bfbfbf;
-    margin-bottom:15px;
+.hero h1 {
+    margin-bottom: 10px;
+    font-family: "Noto Serif TC", serif;
+    font-size: clamp(52px, 10vw, 86px);
+    font-weight: 700;
+    letter-spacing: 2px;
 }
 
-.desc{
-    max-width:720px;
-    line-height:1.8;
-    color:#9f9f9f;
-    margin-bottom:60px;
+.subtitle {
+    margin-bottom: 24px;
+    color: #c8c8c8;
+    font-family: "Noto Serif TC", serif;
+    font-size: 24px;
+    letter-spacing: 8px;
 }
 
-.start-btn{
-    background:white;
-    color:black;
-    border:none;
-    padding:18px 60px;
-    border-radius:50px;
-    font-size:20px;
-    cursor:pointer;
-    transition:.3s;
+.desc {
+    width: 100%;
+    max-width: 720px;
+    margin-bottom: 48px;
+    color: #aaaaaa;
+    font-size: 17px;
+    line-height: 2;
 }
 
-.start-btn:hover{
-    transform:translateY(-4px);
-    background:#dddddd;
+.start-btn {
+    min-width: 220px;
+    padding: 18px 48px;
+    border: 1px solid #ffffff;
+    border-radius: 999px;
+    background: #ffffff;
+    color: #111111;
+    font-family: inherit;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    transition:
+        transform 0.25s ease,
+        background-color 0.25s ease,
+        box-shadow 0.25s ease;
 }
 
-.footer{
-    position:absolute;
-    bottom:30px;
-    color:#666;
-    font-size:14px;
+.start-btn:hover {
+    transform: translateY(-3px);
+    background: #e4e4e4;
+    box-shadow: 0 12px 30px rgba(255, 255, 255, 0.12);
+}
 
+.start-btn:active {
+    transform: translateY(0);
+}
 
+.start-btn:focus-visible {
+    outline: 3px solid rgba(255, 255, 255, 0.45);
+    outline-offset: 4px;
+}
+
+.footer {
+    position: absolute;
+    bottom: 28px;
+    color: #666666;
+    font-size: 13px;
+    letter-spacing: 1px;
+}
+
+/* ==============================
+   測驗頁面主要容器
+============================== */
+
+.container {
+    width: min(92%, 900px);
+    min-height: 100vh;
+    margin: 0 auto;
+    padding: 60px 0;
+}
+
+.header {
+    margin-bottom: 42px;
+    text-align: center;
+}
+
+.header h1 {
+    margin-bottom: 8px;
+    font-family: "Noto Serif TC", serif;
+    font-size: clamp(34px, 6vw, 54px);
+    line-height: 1.2;
+}
+
+.header p {
+    color: #999999;
+    font-size: 16px;
+}
+
+/* ==============================
+   測驗進度
+============================== */
+
+.progress-section {
+    margin-bottom: 36px;
+}
+
+.progress-text {
+    margin-bottom: 10px;
+    color: #aaaaaa;
+    font-size: 14px;
+    text-align: right;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: #2b2b2b;
+}
+
+.progress-fill {
+    width: 0;
+    height: 100%;
+    border-radius: inherit;
+    background: #ffffff;
+    transition: width 0.3s ease;
+}
+
+/* ==============================
+   題目卡片
+============================== */
+
+#question-container,
+#result-container {
+    padding: 44px;
+    border: 1px solid #2e2e2e;
+    border-radius: 24px;
+    background: rgba(20, 20, 20, 0.88);
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(10px);
+}
+
+#question-title {
+    margin-bottom: 18px;
+    color: #ffffff;
+    font-family: "Noto Serif TC", serif;
+    font-size: clamp(25px, 4vw, 36px);
+    line-height: 1.5;
+}
+
+#question-text {
+    margin-bottom: 36px;
+    color: #c5c5c5;
+    font-size: 18px;
+    line-height: 1.9;
+    white-space: pre-line;
+}
+
+/* ==============================
+   A／B 選項按鈕
+============================== */
+
+.button-group {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 18px;
+}
+
+.choice-btn {
+    width: 100%;
+    min-height: 76px;
+    padding: 20px 24px;
+    border: 1px solid #3b3b3b;
+    border-radius: 16px;
+    background: #181818;
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 17px;
+    line-height: 1.7;
+    text-align: left;
+    cursor: pointer;
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        background-color 0.2s ease;
+}
+
+.choice-btn:hover {
+    transform: translateY(-2px);
+    border-color: #ffffff;
+    background: #242424;
+}
+
+.choice-btn:active {
+    transform: translateY(0);
+}
+
+.choice-btn:focus-visible {
+    outline: 3px solid rgba(255, 255, 255, 0.3);
+    outline-offset: 3px;
+}
+
+.choice-btn:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* ==============================
+   測驗完成畫面
+============================== */
+
+#result-container {
+    text-align: center;
+}
+
+#result-container h1 {
+    margin-bottom: 22px;
+    font-family: "Noto Serif TC", serif;
+    font-size: clamp(30px, 5vw, 46px);
+}
+
+#result-container p {
+    margin-bottom: 12px;
+    color: #b8b8b8;
+    font-size: 17px;
+}
+
+#restart-button {
+    margin-top: 28px;
+    padding: 15px 38px;
+    border: none;
+    border-radius: 999px;
+    background: #ffffff;
+    color: #111111;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition:
+        transform 0.2s ease,
+        background-color 0.2s ease;
+}
+
+#restart-button:hover {
+    transform: translateY(-2px);
+    background: #dddddd;
+}
+
+#result-container a {
+    display: inline-block;
+    margin-top: 22px;
+    color: #aaaaaa;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+#result-container a:hover {
+    color: #ffffff;
+}
+
+/* ==============================
+   手機版
+============================== */
+
+@media (max-width: 640px) {
+    .hero {
+        padding: 32px 20px 85px;
+    }
+
+    .subtitle {
+        font-size: 20px;
+        letter-spacing: 5px;
+    }
+
+    .desc {
+        margin-bottom: 38px;
+        font-size: 15px;
+    }
+
+    .start-btn {
+        width: 100%;
+        max-width: 320px;
+        padding: 16px 30px;
+    }
+
+    .container {
+        width: min(92%, 900px);
+        padding: 32px 0;
+    }
+
+    .header {
+        margin-bottom: 28px;
+    }
+
+    #question-container,
+    #result-container {
+        padding: 28px 22px;
+        border-radius: 18px;
+    }
+
+    #question-text {
+        margin-bottom: 28px;
+        font-size: 16px;
+    }
+
+    .choice-btn {
+        min-height: 68px;
+        padding: 17px 18px;
+        font-size: 16px;
+    }
 }
