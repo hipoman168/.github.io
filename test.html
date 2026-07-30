@@ -1,100 +1,746 @@
-<!DOCTYPE html>
-<html lang="zh-Hant">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+"use strict";
 
-    <title>TrueLife 真實人生｜人生選擇測驗</title>
+/*
+  TrueLife 真實人生
+  六維價值分析版
 
-    <link rel="stylesheet" href="css/style.css">
-</head>
+  六個分析維度：
+  1. 同理關懷
+  2. 原則誠信
+  3. 勇氣行動
+  4. 審慎穩定
+  5. 自主界線
+  6. 責任承擔
 
-<body>
+  注意：
+  此模型是 TrueLife 產品內部的情境式分析模型，
+  不是臨床心理測驗或醫療診斷。
+*/
 
-<div class="container">
+// ========================================
+// 基本資料
+// ========================================
 
-    <header class="header">
-        <h1>TrueLife 真實人生</h1>
-        <p>每一個選擇，都定義真正的你。</p>
-    </header>
+let questions = [];
+let currentQuestionIndex = 0;
+let answers = [];
+let resultChart = null;
 
-    <section class="progress-section">
+const dimensions = {
+  empathy: {
+    label: "同理關懷",
+    description: "你願意理解他人的處境，並將關係、情感與他人福祉納入決策。"
+  },
+  integrity: {
+    label: "原則誠信",
+    description: "你重視規則、公平、誠實與內在原則，即使堅持可能帶來代價。"
+  },
+  courage: {
+    label: "勇氣行動",
+    description: "你傾向面對不確定、衝突與風險，並主動採取行動。"
+  },
+  prudence: {
+    label: "審慎穩定",
+    description: "你重視安全、財務穩定、長期後果與風險控制。"
+  },
+  autonomy: {
+    label: "自主界線",
+    description: "你重視個人選擇、權益、界線與忠於自己的生活方向。"
+  },
+  responsibility: {
+    label: "責任承擔",
+    description: "你願意承擔義務、照顧家庭，並考量選擇對整體造成的影響。"
+  }
+};
 
-        <div class="progress-text">
-            <span id="current-question">1</span>
-            /
-            <span id="total-question">31</span>
-        </div>
+/*
+  每個選項可對一至三個維度加分。
+  分數代表該選擇呈現的主要價值，不代表選項對錯。
+*/
 
-        <div class="progress-bar">
-            <div id="progress-fill" class="progress-fill"></div>
-        </div>
+const scoringMap = {
+  1: {
+    A: { empathy: 2, responsibility: 2, courage: 1 },
+    B: { prudence: 2, responsibility: 2, empathy: 1 }
+  },
+  2: {
+    A: { integrity: 1, autonomy: 2, prudence: 1 },
+    B: { empathy: 2, responsibility: 2 }
+  },
+  3: {
+    A: { autonomy: 2, courage: 2, prudence: 1 },
+    B: { responsibility: 2, empathy: 1, prudence: 1 }
+  },
+  4: {
+    A: { courage: 2, autonomy: 2 },
+    B: { prudence: 2, autonomy: 1 }
+  },
+  5: {
+    A: { empathy: 2, responsibility: 1, courage: 1 },
+    B: { prudence: 2, autonomy: 2 }
+  },
+  6: {
+    A: { integrity: 2, responsibility: 2, courage: 1 },
+    B: { empathy: 2, responsibility: 1 }
+  },
+  7: {
+    A: { integrity: 2, courage: 2, responsibility: 1 },
+    B: { empathy: 1, prudence: 1 }
+  },
+  8: {
+    A: { prudence: 1, autonomy: 1 },
+    B: { integrity: 3, courage: 2 }
+  },
+  9: {
+    A: { empathy: 2, responsibility: 2 },
+    B: { responsibility: 2, prudence: 1, empathy: 1 }
+  },
+  10: {
+    A: { courage: 2, responsibility: 2, empathy: 1 },
+    B: { autonomy: 2, prudence: 2, responsibility: 1 }
+  },
+  11: {
+    A: { autonomy: 1, courage: 1 },
+    B: { prudence: 3, responsibility: 1 }
+  },
+  12: {
+    A: { courage: 2, autonomy: 2, responsibility: 1 },
+    B: { prudence: 3, responsibility: 2 }
+  },
+  13: {
+    A: { empathy: 2, autonomy: 2, courage: 1 },
+    B: { prudence: 2, responsibility: 2 }
+  },
+  14: {
+    A: { responsibility: 2, empathy: 2, courage: 1 },
+    B: { empathy: 2, prudence: 2, autonomy: 1 }
+  },
+  15: {
+    A: { integrity: 1, empathy: 2, autonomy: 2 },
+    B: { responsibility: 2, prudence: 1, empathy: 1 }
+  },
+  16: {
+    A: { empathy: 3, courage: 1 },
+    B: { prudence: 2, autonomy: 1 }
+  },
+  17: {
+    A: { responsibility: 2, empathy: 1, autonomy: 1 },
+    B: { integrity: 2, responsibility: 1 }
+  },
+  18: {
+    A: { integrity: 3, empathy: 1, responsibility: 1 },
+    B: { autonomy: 1 }
+  },
+  19: {
+    A: { autonomy: 1 },
+    B: { integrity: 3, responsibility: 1 }
+  },
+  20: {
+    A: { courage: 2, autonomy: 2, integrity: 1 },
+    B: { prudence: 3, responsibility: 2 }
+  },
+  21: {
+    A: { integrity: 2, courage: 2, autonomy: 1 },
+    B: { prudence: 3, responsibility: 2 }
+  },
+  22: {
+    A: { integrity: 3, courage: 2, responsibility: 1 },
+    B: { prudence: 2, autonomy: 1 }
+  },
+  23: {
+    A: { courage: 3, autonomy: 2 },
+    B: { prudence: 3, responsibility: 2 }
+  },
+  24: {
+    A: { empathy: 3, courage: 3, responsibility: 1 },
+    B: { prudence: 3, responsibility: 1 }
+  },
+  25: {
+    A: { empathy: 3, responsibility: 1 },
+    B: { autonomy: 2, prudence: 1 }
+  },
+  26: {
+    A: { prudence: 3, responsibility: 2, courage: 1 },
+    B: { autonomy: 1, prudence: 1 }
+  },
+  27: {
+    A: { responsibility: 3, empathy: 2, integrity: 1 },
+    B: { prudence: 2, autonomy: 1 }
+  },
+  28: {
+    A: { empathy: 1, responsibility: 1 },
+    B: { integrity: 2, autonomy: 2 }
+  },
+  29: {
+    A: { courage: 2, autonomy: 2, integrity: 1 },
+    B: { prudence: 3, responsibility: 1 }
+  },
+  30: {
+    A: { autonomy: 2, courage: 1 },
+    B: { prudence: 2, responsibility: 1 }
+  },
+  31: {
+    A: { autonomy: 2, integrity: 2, courage: 1 },
+    B: { prudence: 1 }
+  }
+};
 
-    </section>
+// ========================================
+// HTML 元素
+// ========================================
 
-    <section id="question-container">
+const progressSection = document.getElementById("progress-section");
+const questionContainer = document.getElementById("question-container");
+const resultContainer = document.getElementById("result-container");
 
-        <h2 id="question-title">
-            題目載入中...
-        </h2>
+const questionTitle = document.getElementById("question-title");
+const questionText = document.getElementById("question-text");
 
-        <p id="question-text">
-            請稍候...
-        </p>
+const optionAButton = document.getElementById("option-a");
+const optionBButton = document.getElementById("option-b");
 
-        <div class="button-group">
+const currentQuestionElement = document.getElementById("current-question");
+const totalQuestionElement = document.getElementById("total-question");
+const progressFill = document.getElementById("progress-fill");
 
-            <button
-                id="option-a"
-                class="choice-btn"
-                type="button">
-                A
-            </button>
+const resultType = document.getElementById("result-type");
+const resultSummary = document.getElementById("result-summary");
+const resultComment = document.getElementById("result-comment");
+const dimensionResults = document.getElementById("dimension-results");
 
-            <button
-                id="option-b"
-                class="choice-btn"
-                type="button">
-                B
-            </button>
+const restartButton = document.getElementById("restart-button");
 
-        </div>
+// ========================================
+// 載入題目
+// ========================================
 
-    </section>
+async function loadQuestions() {
+  try {
+    setButtonsDisabled(true);
 
-    <section
-        id="result-container"
-        style="display:none;">
+    const response = await fetch("data/questions.json", {
+      cache: "no-store"
+    });
 
-        <h1>
-            🎉 測驗完成
-        </h1>
+    if (!response.ok) {
+      throw new Error(`題目檔案讀取失敗：HTTP ${response.status}`);
+    }
 
-        <p>
-            你已經完成所有人生選擇。
-        </p>
+    const data = await response.json();
 
-        <p>
-            每一個選擇，都定義真正的你。
-        </p>
+    if (!Array.isArray(data) || data.length === 0) {
+      throw new Error("questions.json 必須是包含題目的陣列。");
+    }
 
-        <button
-            id="restart-button"
-            type="button">
-            重新測驗
-        </button>
+    validateQuestions(data);
 
-        <br><br>
+    questions = data;
+    totalQuestionElement.textContent = questions.length;
 
-        <a href="index.html">
-            返回首頁
-        </a>
+    startFreshTest();
+  } catch (error) {
+    console.error(error);
+    showLoadError(error.message);
+  }
+}
 
-    </section>
+function validateQuestions(data) {
+  const requiredFields = [
+    "id",
+    "title",
+    "question",
+    "optionA",
+    "optionB"
+  ];
 
-</div>
+  data.forEach((question, index) => {
+    requiredFields.forEach((field) => {
+      if (
+        question[field] === undefined ||
+        question[field] === null ||
+        String(question[field]).trim() === ""
+      ) {
+        throw new Error(
+          `第 ${index + 1} 筆題目缺少必要欄位：${field}`
+        );
+      }
+    });
 
-<script src="js/test.js"></script>
+    if (!scoringMap[question.id]) {
+      throw new Error(
+        `第 ${index + 1} 題（ID ${question.id}）沒有設定評分規則。`
+      );
+    }
+  });
+}
 
-</body>
-</html>
+// ========================================
+// 顯示題目
+// ========================================
+
+function showQuestion() {
+  if (currentQuestionIndex >= questions.length) {
+    showCompletionScreen();
+    return;
+  }
+
+  const currentQuestion = questions[currentQuestionIndex];
+
+  questionContainer.hidden = false;
+  resultContainer.hidden = true;
+  progressSection.hidden = false;
+
+  questionTitle.textContent = currentQuestion.title;
+  questionText.textContent = currentQuestion.question;
+
+  optionAButton.textContent = `A．${currentQuestion.optionA}`;
+  optionBButton.textContent = `B．${currentQuestion.optionB}`;
+
+  currentQuestionElement.textContent = currentQuestionIndex + 1;
+  totalQuestionElement.textContent = questions.length;
+
+  updateProgressBar();
+  setButtonsDisabled(false);
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}
+
+// ========================================
+// 作答
+// ========================================
+
+function selectAnswer(choice) {
+  if (
+    questions.length === 0 ||
+    currentQuestionIndex >= questions.length ||
+    !["A", "B"].includes(choice)
+  ) {
+    return;
+  }
+
+  setButtonsDisabled(true);
+
+  const currentQuestion = questions[currentQuestionIndex];
+
+  answers.push({
+    questionId: Number(currentQuestion.id),
+    choice,
+    selectedText:
+      choice === "A"
+        ? currentQuestion.optionA
+        : currentQuestion.optionB
+  });
+
+  currentQuestionIndex += 1;
+  saveProgress();
+
+  window.setTimeout(showQuestion, 180);
+}
+
+function updateProgressBar() {
+  if (questions.length === 0) {
+    progressFill.style.width = "0%";
+    return;
+  }
+
+  const answeredCount = Math.min(
+    currentQuestionIndex,
+    questions.length
+  );
+
+  const progress = currentQuestionIndex === 0
+    ? (1 / questions.length) * 100
+    : (answeredCount / questions.length) * 100;
+
+  progressFill.style.width = `${progress}%`;
+}
+
+// ========================================
+// 分析計算
+// ========================================
+
+function calculateResults() {
+  const rawScores = createEmptyScores();
+  const maximumScores = createEmptyScores();
+
+  questions.forEach((question) => {
+    const rule = scoringMap[Number(question.id)];
+
+    Object.keys(dimensions).forEach((dimensionKey) => {
+      const aScore = rule.A[dimensionKey] || 0;
+      const bScore = rule.B[dimensionKey] || 0;
+
+      maximumScores[dimensionKey] += Math.max(aScore, bScore);
+    });
+  });
+
+  answers.forEach((answer) => {
+    const rule = scoringMap[Number(answer.questionId)];
+    const choiceScores = rule?.[answer.choice];
+
+    if (!choiceScores) {
+      return;
+    }
+
+    Object.entries(choiceScores).forEach(([dimensionKey, value]) => {
+      rawScores[dimensionKey] += value;
+    });
+  });
+
+  const percentages = {};
+
+  Object.keys(dimensions).forEach((dimensionKey) => {
+    const maximum = maximumScores[dimensionKey];
+
+    percentages[dimensionKey] = maximum > 0
+      ? Math.round((rawScores[dimensionKey] / maximum) * 100)
+      : 0;
+  });
+
+  return {
+    rawScores,
+    maximumScores,
+    percentages
+  };
+}
+
+function createEmptyScores() {
+  return Object.keys(dimensions).reduce((scores, key) => {
+    scores[key] = 0;
+    return scores;
+  }, {});
+}
+
+// ========================================
+// 顯示結果
+// ========================================
+
+function showCompletionScreen() {
+  questionContainer.hidden = true;
+  resultContainer.hidden = false;
+  progressSection.hidden = true;
+
+  const results = calculateResults();
+  const ranking = getDimensionRanking(results.percentages);
+
+  renderCoreResult(ranking, results.percentages);
+  renderDimensionResults(results.percentages);
+  renderChart(results.percentages);
+  renderComment(ranking, results.percentages);
+
+  localStorage.setItem(
+    "truelifeAnswers",
+    JSON.stringify(answers)
+  );
+
+  localStorage.setItem(
+    "truelifeResults",
+    JSON.stringify(results)
+  );
+
+  localStorage.setItem(
+    "truelifeCompletedAt",
+    new Date().toISOString()
+  );
+
+  localStorage.removeItem("truelifeProgress");
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}
+
+function getDimensionRanking(percentages) {
+  return Object.entries(percentages)
+    .sort((first, second) => second[1] - first[1]);
+}
+
+function renderCoreResult(ranking, percentages) {
+  const [first, second] = ranking;
+  const firstDimension = dimensions[first[0]];
+  const secondDimension = dimensions[second[0]];
+
+  resultType.textContent =
+    `${firstDimension.label} × ${secondDimension.label}`;
+
+  resultSummary.textContent =
+    `你的選擇最明顯地集中在「${firstDimension.label}」與「${secondDimension.label}」。` +
+    `這表示你做決定時，通常會先考慮${getDecisionFocus(first[0])}，` +
+    `同時也會留意${getDecisionFocus(second[0])}。` +
+    `這不是固定人格，而是你在本次人生情境中呈現出的優先順序。`;
+
+  if (percentages[first[0]] - percentages[second[0]] >= 18) {
+    resultSummary.textContent +=
+      `其中「${firstDimension.label}」的傾向尤其明顯，可能是你面對困難抉擇時最常啟動的判斷基準。`;
+  }
+}
+
+function renderDimensionResults(percentages) {
+  dimensionResults.innerHTML = "";
+
+  Object.entries(dimensions).forEach(([key, dimension]) => {
+    const score = percentages[key];
+    const interpretation = getScoreInterpretation(key, score);
+
+    const item = document.createElement("article");
+    item.className = "dimension-card";
+
+    item.innerHTML = `
+      <div class="dimension-card-header">
+        <h3>${dimension.label}</h3>
+        <strong>${score}</strong>
+      </div>
+
+      <div class="dimension-meter" aria-hidden="true">
+        <span style="width: ${score}%"></span>
+      </div>
+
+      <p>${interpretation}</p>
+    `;
+
+    dimensionResults.appendChild(item);
+  });
+}
+
+function renderChart(percentages) {
+  const canvas = document.getElementById("result-chart");
+
+  if (resultChart) {
+    resultChart.destroy();
+  }
+
+  const labels = Object.values(dimensions).map(
+    (dimension) => dimension.label
+  );
+
+  const values = Object.keys(dimensions).map(
+    (key) => percentages[key]
+  );
+
+  resultChart = new Chart(canvas, {
+    type: "radar",
+    data: {
+      labels,
+      datasets: [
+        {
+          label: "你的價值傾向",
+          data: values,
+          fill: true,
+          backgroundColor: "rgba(255, 255, 255, 0.14)",
+          borderColor: "rgba(255, 255, 255, 0.95)",
+          pointBackgroundColor: "#ffffff",
+          pointBorderColor: "#111111",
+          pointHoverBackgroundColor: "#111111",
+          pointHoverBorderColor: "#ffffff",
+          borderWidth: 2,
+          pointRadius: 4
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      animation: {
+        duration: 700
+      },
+      plugins: {
+        legend: {
+          display: false
+        },
+        tooltip: {
+          callbacks: {
+            label(context) {
+              return `${context.raw} 分`;
+            }
+          }
+        }
+      },
+      scales: {
+        r: {
+          min: 0,
+          max: 100,
+          beginAtZero: true,
+          ticks: {
+            display: false,
+            stepSize: 20
+          },
+          angleLines: {
+            color: "rgba(255, 255, 255, 0.14)"
+          },
+          grid: {
+            color: "rgba(255, 255, 255, 0.14)"
+          },
+          pointLabels: {
+            color: "#ffffff",
+            font: {
+              family: "'Noto Sans TC', sans-serif",
+              size: 14,
+              weight: "500"
+            }
+          }
+        }
+      }
+    }
+  });
+}
+
+function renderComment(ranking, percentages) {
+  const [first, second, third, , , last] = ranking;
+
+  const firstLabel = dimensions[first[0]].label;
+  const secondLabel = dimensions[second[0]].label;
+  const thirdLabel = dimensions[third[0]].label;
+  const lastLabel = dimensions[last[0]].label;
+
+  const spread = first[1] - last[1];
+
+  let balanceComment;
+
+  if (spread <= 18) {
+    balanceComment =
+      "你的六項分數相對接近，顯示你不太會只用單一標準處理所有事情。你會隨情境調整判斷，在關係、原則、風險與現實之間尋找平衡。";
+  } else if (spread <= 35) {
+    balanceComment =
+      `你的決策有明確重心，但仍保留調整空間。你通常會先依循「${firstLabel}」做判斷，再視情況加入其他考量。`;
+  } else {
+    balanceComment =
+      `你的價值排序相當鮮明。「${firstLabel}」明顯高於其他面向，代表你面臨壓力時，容易優先使用這套標準快速做出決定。`;
+  }
+
+  const lowScoreComment =
+    last[1] < 35
+      ? `相較之下，「${lastLabel}」較少成為你的第一優先。這不表示你缺少這項能力，而是本次題目中，你更常把其他價值放在它前面。`
+      : `你最低的「${lastLabel}」仍保有一定分數，表示你的整體價值結構沒有明顯缺口。`;
+
+  resultComment.textContent =
+    `整體而言，你最重視的是「${firstLabel}」，其次是「${secondLabel}」與「${thirdLabel}」。` +
+    balanceComment +
+    lowScoreComment +
+    " 真正值得注意的不是哪一項最高，而是當兩個重要價值互相衝突時，你通常願意犧牲哪一個。那往往比單一分數更接近你的真實人生選擇。";
+}
+
+// ========================================
+// 評論文字
+// ========================================
+
+function getDecisionFocus(key) {
+  const focusMap = {
+    empathy: "他人的感受、關係與實際處境",
+    integrity: "公平、規則與自己能否問心無愧",
+    courage: "是否值得承擔風險並採取行動",
+    prudence: "安全、成本與長期穩定",
+    autonomy: "個人界線、權益與真實意願",
+    responsibility: "家庭、義務與選擇帶來的後果"
+  };
+
+  return focusMap[key];
+}
+
+function getScoreInterpretation(key, score) {
+  const label = dimensions[key].label;
+
+  if (score >= 75) {
+    return `「${label}」是你非常突出的判斷基準。面對兩難時，你通常不會輕易忽略這項價值。`;
+  }
+
+  if (score >= 55) {
+    return `你經常把「${label}」納入重要考量，但仍會根據現實條件調整。`;
+  }
+
+  if (score >= 35) {
+    return `你具備「${label}」傾向，但它通常需要與其他價值一起衡量，不一定是第一優先。`;
+  }
+
+  return `在本次情境中，「${label}」較少成為你的首要標準。這反映的是本次選擇排序，不代表你缺乏這項特質。`;
+}
+
+// ========================================
+// 儲存與重新開始
+// ========================================
+
+function saveProgress() {
+  const progressData = {
+    currentQuestionIndex,
+    answers
+  };
+
+  localStorage.setItem(
+    "truelifeProgress",
+    JSON.stringify(progressData)
+  );
+}
+
+function startFreshTest() {
+  currentQuestionIndex = 0;
+  answers = [];
+
+  localStorage.removeItem("truelifeProgress");
+  localStorage.removeItem("truelifeAnswers");
+  localStorage.removeItem("truelifeResults");
+  localStorage.removeItem("truelifeCompletedAt");
+
+  if (resultChart) {
+    resultChart.destroy();
+    resultChart = null;
+  }
+
+  showQuestion();
+}
+
+function restartTest() {
+  const confirmed = window.confirm(
+    "確定要清除目前結果並重新開始嗎？"
+  );
+
+  if (!confirmed) {
+    return;
+  }
+
+  startFreshTest();
+}
+
+// ========================================
+// 錯誤處理
+// ========================================
+
+function showLoadError(message) {
+  questionContainer.hidden = false;
+  resultContainer.hidden = true;
+  progressSection.hidden = false;
+
+  questionTitle.textContent = "題目載入失敗";
+  questionText.textContent =
+    `${message} 請確認 data/questions.json 的路徑、內容與格式。`;
+
+  optionAButton.hidden = true;
+  optionBButton.hidden = true;
+
+  currentQuestionElement.textContent = "0";
+  totalQuestionElement.textContent = "0";
+  progressFill.style.width = "0%";
+}
+
+function setButtonsDisabled(disabled) {
+  optionAButton.disabled = disabled;
+  optionBButton.disabled = disabled;
+}
+
+// ========================================
+// 事件
+// ========================================
+
+optionAButton.addEventListener("click", () => {
+  selectAnswer("A");
+});
+
+optionBButton.addEventListener("click", () => {
+  selectAnswer("B");
+});
+
+restartButton.addEventListener("click", restartTest);
+
+document.addEventListener("DOMContentLoaded", loadQuestions);
