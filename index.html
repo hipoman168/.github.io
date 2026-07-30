@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>TrueLife｜真實人生</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    background:#0d0d0d;
+    color:white;
+    font-family:'Noto Sans TC',sans-serif;
+
+}
+
+.hero{
+
+    height:100vh;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    text-align:center;
+
+    padding:30px;
+
+    background:
+    radial-gradient(circle at top,#222,#111,#000);
+
+}
+
+h1{
+
+    font-size:72px;
+
+    font-family:'Noto Serif TC',serif;
+
+    margin-bottom:20px;
+
+}
+
+.subtitle{
+
+    font-size:24px;
+
+    color:#bfbfbf;
+
+    margin-bottom:15px;
+
+}
+
+.desc{
+
+    max-width:720px;
+
+    line-height:1.8;
+
+    color:#9f9f9f;
+
+    margin-bottom:60px;
+
+}
+
+.start-btn{
+
+    background:white;
+
+    color:black;
+
+    border:none;
+
+    padding:18px 60px;
+
+    border-radius:50px;
+
+    font-size:20px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.start-btn:hover{
+
+    transform:translateY(-4px);
+
+    background:#dddddd;
+
+}
+
+.footer{
+
+    position:absolute;
+
+    bottom:30px;
+
+    color:#666;
+
+    font-size:14px;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<section class="hero">
+
+<h1>TrueLife</h1>
+
+<div class="subtitle">
+真實人生
+</div>
+
+<div class="desc">
+
+每一個選擇，都定義真正的你。<br><br>
+
+TrueLife 並不是人格測驗。<br>
+
+而是透過 20 個人生兩難抉擇，
+分析你的價值排序、決策模式與人生傾向。
+
+</div>
+
+<button class="start-btn" onclick="startTest()">
+
+開始測驗
+
+</button>
+
+<div class="footer">
+
+Version 0.1 Beta
+
+</div>
+
+</section>
+
+<script>
+
+function startTest(){
+
+    alert("下一步將進入第一題。");
+
+}
+
+</script>
+
+</body>
+</html>
