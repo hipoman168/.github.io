@@ -226,6 +226,8 @@ function validateQuestions(data) {
 // =========================================================
 
 function showQuestion() {
+  document.body.classList.remove("result-active");
+
   if (currentQuestionIndex >= questions.length) {
     showCompletionScreen();
     return;
@@ -331,6 +333,7 @@ function getDimensionRanking(percentages) {
 // =========================================================
 
 function showCompletionScreen() {
+  document.body.classList.add("result-active");
   questionContainer.hidden = true;
   progressSection.hidden = true;
   resultContainer.hidden = false;
