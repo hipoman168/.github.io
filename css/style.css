@@ -1,543 +1,650 @@
-/* ==============================
+/* =========================================================
    TrueLife 真實人生
-   全站共用樣式
-============================== */
+   style.css
+   適用：index.html / test.html
+   ========================================================= */
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* ---------- Reset ---------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 html {
-    scroll-behavior: smooth;
+  scroll-behavior: smooth;
 }
 
 body {
-    min-height: 100vh;
-    background:
-        radial-gradient(circle at top, #222222 0%, #111111 45%, #000000 100%);
-    color: #ffffff;
-    font-family: "Noto Sans TC", sans-serif;
-    line-height: 1.7;
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top, rgba(255, 255, 255, 0.05), transparent 34rem),
+    #090909;
+  color: #f4f1eb;
+  font-family:
+    "Noto Sans TC",
+    "PingFang TC",
+    "Microsoft JhengHei",
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  line-height: 1.7;
+  letter-spacing: 0.02em;
 }
 
-/* ==============================
-   首頁
-============================== */
-
-.hero {
-    position: relative;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 40px 24px 90px;
+img,
+svg,
+canvas {
+  display: block;
+  max-width: 100%;
 }
 
-.hero h1 {
-    margin-bottom: 10px;
-    font-family: "Noto Serif TC", serif;
-    font-size: clamp(52px, 10vw, 86px);
-    font-weight: 700;
-    letter-spacing: 2px;
+button,
+input,
+textarea,
+select {
+  font: inherit;
 }
 
-.subtitle {
-    margin-bottom: 24px;
-    color: #c8c8c8;
-    font-family: "Noto Serif TC", serif;
-    font-size: 24px;
-    letter-spacing: 8px;
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
 }
 
-.desc {
-    width: 100%;
-    max-width: 720px;
-    margin-bottom: 48px;
-    color: #aaaaaa;
-    font-size: 17px;
-    line-height: 2;
+button {
+  border: 0;
 }
 
-.start-btn {
-    min-width: 220px;
-    padding: 18px 48px;
-    border: 1px solid #ffffff;
-    border-radius: 999px;
-    background: #ffffff;
-    color: #111111;
-    font-family: inherit;
-    font-size: 18px;
-    font-weight: 700;
-    cursor: pointer;
-    transition:
-        transform 0.25s ease,
-        background-color 0.25s ease,
-        box-shadow 0.25s ease;
+a {
+  color: inherit;
+  text-decoration: none;
 }
 
-.start-btn:hover {
-    transform: translateY(-3px);
-    background: #e4e4e4;
-    box-shadow: 0 12px 30px rgba(255, 255, 255, 0.12);
+/*
+  非常重要：
+  HTML 元素只要有 hidden 屬性，就一定隱藏。
+  JavaScript 設定 element.hidden = false 後才會顯示。
+*/
+[hidden] {
+  display: none !important;
 }
 
-.start-btn:active {
-    transform: translateY(0);
+
+/* ---------- Design tokens ---------- */
+
+:root {
+  --background: #090909;
+  --background-soft: #101010;
+  --surface: rgba(255, 255, 255, 0.045);
+  --surface-strong: rgba(255, 255, 255, 0.075);
+  --border: rgba(255, 255, 255, 0.14);
+  --border-strong: rgba(255, 255, 255, 0.28);
+  --text: #f4f1eb;
+  --text-soft: #aaa7a0;
+  --text-faint: #77736d;
+  --accent: #f4f1eb;
+  --accent-dark: #111111;
+  --danger: #ff9b9b;
+  --shadow: 0 24px 80px rgba(0, 0, 0, 0.4);
+  --radius-large: 28px;
+  --radius-medium: 18px;
+  --radius-small: 12px;
+  --container: 1180px;
 }
 
-.start-btn:focus-visible {
-    outline: 3px solid rgba(255, 255, 255, 0.45);
-    outline-offset: 4px;
-}
 
-.footer {
-    position: absolute;
-    bottom: 28px;
-    color: #666666;
-    font-size: 13px;
-    letter-spacing: 1px;
-}
-
-/* ==============================
-   測驗頁面主要容器
-============================== */
+/* ---------- Shared layout ---------- */
 
 .container {
-    width: min(92%, 900px);
-    min-height: 100vh;
-    margin: 0 auto;
-    padding: 60px 0;
+  width: min(calc(100% - 40px), var(--container));
+  margin-inline: auto;
 }
 
-.header {
-    margin-bottom: 42px;
-    text-align: center;
+main {
+  min-height: calc(100vh - 180px);
 }
 
-.header h1 {
-    margin-bottom: 8px;
-    font-family: "Noto Serif TC", serif;
-    font-size: clamp(34px, 6vw, 54px);
-    line-height: 1.2;
+section {
+  position: relative;
 }
 
-.header p {
-    color: #999999;
-    font-size: 16px;
+.eyebrow,
+.question-label,
+.result-label {
+  margin: 0 0 10px;
+  color: var(--text-soft);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
 }
 
-/* ==============================
-   測驗進度
-============================== */
+.section-heading {
+  margin-bottom: 24px;
+}
+
+.section-heading h2 {
+  margin: 0;
+  font-family:
+    Georgia,
+    "Times New Roman",
+    "Noto Serif TC",
+    "Songti TC",
+    serif;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+
+/* ---------- Header ---------- */
+
+.site-header {
+  position: relative;
+  z-index: 20;
+  padding: 22px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  background: rgba(9, 9, 9, 0.82);
+  backdrop-filter: blur(16px);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.brand-chinese {
+  font-family:
+    Georgia,
+    "Times New Roman",
+    "Noto Serif TC",
+    "Songti TC",
+    serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.brand-english {
+  color: var(--text-soft);
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+
+/* ---------- Test hero ---------- */
+
+.test-page {
+  padding-bottom: 96px;
+}
+
+.test-hero {
+  padding: 70px 0 40px;
+  text-align: center;
+}
+
+.test-hero h1 {
+  margin: 0;
+  font-family:
+    Georgia,
+    "Times New Roman",
+    "Noto Serif TC",
+    "Songti TC",
+    serif;
+  font-size: clamp(3rem, 8vw, 5.8rem);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+}
+
+.test-hero > .container > p:last-child {
+  margin: 18px auto 0;
+  color: var(--text-soft);
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+}
+
+
+/* ---------- Progress ---------- */
 
 .progress-section {
-    margin-bottom: 36px;
+  padding: 24px 0 48px;
 }
 
-.progress-text {
-    margin-bottom: 10px;
-    color: #aaaaaa;
-    font-size: 14px;
-    text-align: right;
+.progress-information {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  color: var(--text-soft);
+  font-size: 0.95rem;
 }
 
-.progress-bar {
-    width: 100%;
-    height: 8px;
-    overflow: hidden;
-    border-radius: 999px;
-    background: #2b2b2b;
+.progress-information strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.progress-track {
+  width: 100%;
+  height: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.09);
 }
 
 .progress-fill {
-    width: 0;
-    height: 100%;
-    border-radius: inherit;
-    background: #ffffff;
-    transition: width 0.3s ease;
+  width: 0;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #f7f5ef, #b9b5ad);
+  transition: width 260ms ease;
 }
 
-/* ==============================
-   題目卡片
-============================== */
 
-#question-container,
-#result-container {
-    padding: 44px;
-    border: 1px solid #2e2e2e;
-    border-radius: 24px;
-    background: rgba(20, 20, 20, 0.88);
-    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
-    backdrop-filter: blur(10px);
+/* ---------- Question ---------- */
+
+.question-section {
+  padding: 0 0 72px;
 }
 
-#question-title {
-    margin-bottom: 18px;
-    color: #ffffff;
-    font-family: "Noto Serif TC", serif;
-    font-size: clamp(25px, 4vw, 36px);
-    line-height: 1.5;
+.question-card {
+  width: min(100%, 860px);
+  margin: 0 auto;
+  padding: clamp(28px, 5vw, 56px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-large);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.065), rgba(255, 255, 255, 0.025));
+  box-shadow: var(--shadow);
+}
+
+.question-card h2 {
+  margin: 0 0 20px;
+  font-family:
+    Georgia,
+    "Times New Roman",
+    "Noto Serif TC",
+    "Songti TC",
+    serif;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  line-height: 1.3;
 }
 
 #question-text {
-    margin-bottom: 36px;
-    color: #c5c5c5;
-    font-size: 18px;
-    line-height: 1.9;
-    white-space: pre-line;
+  margin: 0;
+  color: #d4d0c9;
+  font-size: clamp(1.05rem, 2vw, 1.22rem);
 }
 
-/* ==============================
-   A／B 選項按鈕
-============================== */
-
-.button-group {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 18px;
+.option-list {
+  display: grid;
+  gap: 16px;
+  margin-top: 38px;
 }
 
-.choice-btn {
-    width: 100%;
-    min-height: 76px;
-    padding: 20px 24px;
-    border: 1px solid #3b3b3b;
-    border-radius: 16px;
-    background: #181818;
-    color: #ffffff;
-    font-family: inherit;
-    font-size: 17px;
-    line-height: 1.7;
-    text-align: left;
-    cursor: pointer;
-    transition:
-        transform 0.2s ease,
-        border-color 0.2s ease,
-        background-color 0.2s ease;
+.option-button {
+  width: 100%;
+  min-height: 72px;
+  padding: 18px 22px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-medium);
+  background: rgba(255, 255, 255, 0.045);
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+  transition:
+    transform 160ms ease,
+    border-color 160ms ease,
+    background-color 160ms ease;
 }
 
-.choice-btn:hover {
-    transform: translateY(-2px);
-    border-color: #ffffff;
-    background: #242424;
+.option-button:hover:not(:disabled),
+.option-button:focus-visible:not(:disabled) {
+  transform: translateY(-2px);
+  border-color: var(--border-strong);
+  background: rgba(255, 255, 255, 0.09);
+  outline: none;
 }
 
-.choice-btn:active {
-    transform: translateY(0);
+.option-button:active:not(:disabled) {
+  transform: translateY(0);
 }
 
-.choice-btn:focus-visible {
-    outline: 3px solid rgba(255, 255, 255, 0.3);
-    outline-offset: 3px;
+.option-button:disabled {
+  cursor: wait;
+  opacity: 0.58;
 }
 
-.choice-btn:disabled {
-    opacity: 0.55;
-    cursor: not-allowed;
-    transform: none;
+
+/* ---------- Result section ---------- */
+
+/*
+  不要在這裡寫 display: none。
+  顯示與隱藏完全交給 HTML hidden 屬性及 JavaScript 控制。
+*/
+.result-section {
+  display: block;
+  padding: 0 0 80px;
 }
 
-/* ==============================
-   測驗完成畫面
-============================== */
-
-#result-container {
-    text-align: center;
+.result-section > .container {
+  display: grid;
+  gap: 38px;
 }
 
-#result-container h1 {
-    margin-bottom: 22px;
-    font-family: "Noto Serif TC", serif;
-    font-size: clamp(30px, 5vw, 46px);
+.result-hero-card,
+.chart-section,
+.dimension-section,
+.comment-section {
+  width: min(100%, 980px);
+  margin-inline: auto;
 }
 
-#result-container p {
-    margin-bottom: 12px;
-    color: #b8b8b8;
-    font-size: 17px;
+.result-hero-card {
+  padding: clamp(30px, 6vw, 64px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-large);
+  background:
+    radial-gradient(circle at top right, rgba(255, 255, 255, 0.10), transparent 18rem),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.025));
+  box-shadow: var(--shadow);
+  text-align: center;
 }
 
-#restart-button {
-    margin-top: 28px;
-    padding: 15px 38px;
-    border: none;
-    border-radius: 999px;
-    background: #ffffff;
-    color: #111111;
-    font-family: inherit;
-    font-size: 16px;
-    font-weight: 700;
-    cursor: pointer;
-    transition:
-        transform 0.2s ease,
-        background-color 0.2s ease;
+.result-hero-card h2 {
+  margin: 0;
+  font-family:
+    Georgia,
+    "Times New Roman",
+    "Noto Serif TC",
+    "Songti TC",
+    serif;
+  font-size: clamp(2.3rem, 6vw, 4.6rem);
+  line-height: 1.15;
 }
 
-#restart-button:hover {
-    transform: translateY(-2px);
-    background: #dddddd;
+#result-summary {
+  max-width: 700px;
+  margin: 20px auto 0;
+  color: #cbc7c0;
+  font-size: clamp(1rem, 2vw, 1.18rem);
 }
 
-#result-container a {
-    display: inline-block;
-    margin-top: 22px;
-    color: #aaaaaa;
-    text-decoration: none;
-    transition: color 0.2s ease;
+.chart-section,
+.dimension-section,
+.comment-section {
+  padding: clamp(26px, 5vw, 48px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-large);
+  background: var(--surface);
 }
 
-#result-container a:hover {
-    color: #ffffff;
+.chart-container {
+  position: relative;
+  width: min(100%, 680px);
+  min-height: 420px;
+  margin: 0 auto;
+  padding: 16px;
 }
 
-/* ==============================
-   手機版
-============================== */
-
-@media (max-width: 640px) {
-    .hero {
-        padding: 32px 20px 85px;
-    }
-
-    .subtitle {
-        font-size: 20px;
-        letter-spacing: 5px;
-    }
-
-    .desc {
-        margin-bottom: 38px;
-        font-size: 15px;
-    }
-
-    .start-btn {
-        width: 100%;
-        max-width: 320px;
-        padding: 16px 30px;
-    }
-
-    .container {
-        width: min(92%, 900px);
-        padding: 32px 0;
-    }
-
-    .header {
-        margin-bottom: 28px;
-    }
-
-    #question-container,
-    #result-container {
-        padding: 28px 22px;
-        border-radius: 18px;
-    }
-
-    #question-text {
-        margin-bottom: 28px;
-        font-size: 16px;
-    }
-
-    .choice-btn {
-        min-height: 68px;
-        padding: 17px 18px;
-        font-size: 16px;
-    }
-}
-/* ==============================
-   TrueLife 分析結果頁
-============================== */
-
-[hidden] {
-    display: none !important;
+#result-chart {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 380px;
 }
 
-.result-heading {
-    margin-bottom: 32px;
-    text-align: center;
-}
 
-.result-heading h1 {
-    margin-bottom: 16px;
-    font-family: "Noto Serif TC", serif;
-    font-size: clamp(32px, 6vw, 52px);
-}
-
-.result-heading p {
-    color: #aaaaaa;
-    line-height: 1.9;
-}
-
-.result-kicker {
-    margin-bottom: 8px;
-    color: #777777 !important;
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-}
-
-.result-summary-card,
-.chart-card,
-.comment-card {
-    margin-top: 24px;
-    padding: 30px;
-    border: 1px solid #303030;
-    border-radius: 20px;
-    background: #161616;
-    text-align: left;
-}
-
-.result-summary-card > span {
-    color: #888888;
-    font-size: 14px;
-}
-
-.result-summary-card h2 {
-    margin: 8px 0 14px;
-    font-family: "Noto Serif TC", serif;
-    font-size: clamp(26px, 5vw, 40px);
-}
-
-.result-summary-card p,
-.comment-card p {
-    color: #bcbcbc;
-    line-height: 1.95;
-}
-
-.chart-card h2,
-.dimension-section h2,
-.comment-card h2 {
-    margin-bottom: 20px;
-    font-family: "Noto Serif TC", serif;
-    font-size: 24px;
-}
-
-.chart-wrapper {
-    position: relative;
-    width: 100%;
-    height: 430px;
-}
-
-.dimension-section {
-    margin-top: 36px;
-    text-align: left;
-}
+/* ---------- Dimension results ---------- */
 
 .dimension-results {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
 }
 
-.dimension-card {
-    padding: 22px;
-    border: 1px solid #303030;
-    border-radius: 16px;
-    background: #151515;
+.dimension-card,
+.dimension-result,
+.dimension-item {
+  padding: 22px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-medium);
+  background: rgba(255, 255, 255, 0.035);
 }
 
-.dimension-card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
+.dimension-card h3,
+.dimension-result h3,
+.dimension-item h3 {
+  margin: 0 0 8px;
+  font-size: 1.12rem;
 }
 
-.dimension-card h3 {
-    font-size: 18px;
+.dimension-card p,
+.dimension-result p,
+.dimension-item p {
+  margin: 0;
+  color: var(--text-soft);
 }
 
-.dimension-card strong {
-    font-family: "Noto Serif TC", serif;
-    font-size: 26px;
+.dimension-score {
+  display: inline-block;
+  margin-top: 12px;
+  color: var(--text);
+  font-size: 1.35rem;
+  font-weight: 700;
 }
 
-.dimension-card p {
-    margin-top: 14px;
-    color: #999999;
-    font-size: 14px;
-    line-height: 1.8;
+.dimension-bar,
+.score-track {
+  height: 8px;
+  margin-top: 14px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.10);
 }
 
-.dimension-meter {
-    width: 100%;
-    height: 6px;
-    margin-top: 14px;
-    overflow: hidden;
-    border-radius: 999px;
-    background: #303030;
+.dimension-bar-fill,
+.score-fill {
+  height: 100%;
+  border-radius: inherit;
+  background: var(--accent);
 }
 
-.dimension-meter span {
-    display: block;
-    height: 100%;
-    border-radius: inherit;
-    background: #ffffff;
+
+/* ---------- Comment ---------- */
+
+.comment-card {
+  padding: 0;
 }
 
-.result-notice {
-    margin-top: 24px;
-    padding: 18px;
-    border-left: 3px solid #555555;
-    background: rgba(255, 255, 255, 0.025);
-    color: #777777;
-    font-size: 13px;
-    line-height: 1.8;
-    text-align: left;
+.comment-card h2 {
+  margin: 0 0 16px;
+  font-family:
+    Georgia,
+    "Times New Roman",
+    "Noto Serif TC",
+    "Songti TC",
+    serif;
+  font-size: clamp(1.8rem, 4vw, 3rem);
 }
+
+#result-comment {
+  margin: 0;
+  color: #d0ccc5;
+  white-space: pre-line;
+}
+
+
+/* ---------- Actions ---------- */
 
 .result-actions {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 34px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+  width: min(100%, 980px);
+  margin: 4px auto 0;
+}
+
+.primary-button,
+.secondary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 160px;
+  min-height: 52px;
+  padding: 12px 22px;
+  border-radius: 999px;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    transform 160ms ease,
+    opacity 160ms ease,
+    background-color 160ms ease;
 }
 
 .primary-button {
-    padding: 15px 38px;
-    border: none;
-    border-radius: 999px;
-    background: #ffffff;
-    color: #111111;
-    font-family: inherit;
-    font-size: 16px;
-    font-weight: 700;
-    cursor: pointer;
+  background: var(--accent);
+  color: var(--accent-dark);
 }
 
-.primary-button:hover {
-    background: #dddddd;
+.secondary-button {
+  border: 1px solid var(--border-strong);
+  background: transparent;
+  color: var(--text);
 }
 
-.secondary-link {
-    display: inline-block;
-    margin-top: 20px;
-    color: #999999;
-    text-decoration: none;
+.primary-button:hover,
+.secondary-button:hover {
+  transform: translateY(-2px);
 }
 
-.secondary-link:hover {
-    color: #ffffff;
+.primary-button:focus-visible,
+.secondary-button:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 4px;
 }
 
-@media (max-width: 640px) {
-    .result-summary-card,
-    .chart-card,
-    .comment-card {
-        padding: 22px 18px;
-    }
 
-    .chart-wrapper {
-        height: 340px;
-    }
+/* ---------- Footer ---------- */
 
-    .dimension-results {
-        grid-template-columns: 1fr;
-    }
+.site-footer {
+  padding: 36px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  color: var(--text-faint);
+  text-align: center;
+}
 
-    .dimension-card {
-        padding: 19px;
-    }
+.site-footer p {
+  margin: 4px 0;
+  font-size: 0.84rem;
+}
+
+
+/* ---------- Generic homepage helpers ---------- */
+
+.hero,
+.home-hero {
+  padding: clamp(80px, 12vw, 150px) 0;
+  text-align: center;
+}
+
+.hero h1,
+.home-hero h1 {
+  margin: 0;
+  font-family:
+    Georgia,
+    "Times New Roman",
+    "Noto Serif TC",
+    "Songti TC",
+    serif;
+  font-size: clamp(3.5rem, 9vw, 7rem);
+  line-height: 1;
+}
+
+.hero p,
+.home-hero p {
+  max-width: 720px;
+  margin: 24px auto 0;
+  color: var(--text-soft);
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 34px;
+}
+
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 760px) {
+  .container {
+    width: min(calc(100% - 28px), var(--container));
+  }
+
+  .site-header {
+    padding: 17px 0;
+  }
+
+  .test-hero {
+    padding: 52px 0 30px;
+  }
+
+  .progress-section {
+    padding-bottom: 32px;
+  }
+
+  .question-card {
+    padding: 26px 20px;
+    border-radius: 22px;
+  }
+
+  .option-button {
+    min-height: 66px;
+    padding: 16px 18px;
+  }
+
+  .dimension-results {
+    grid-template-columns: 1fr;
+  }
+
+  .chart-container {
+    min-height: 340px;
+    padding: 0;
+  }
+
+  #result-chart {
+    min-height: 320px;
+  }
+
+  .result-actions {
+    flex-direction: column;
+  }
+
+  .primary-button,
+  .secondary-button {
+    width: 100%;
+  }
+}
+
+
+/* ---------- Reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
 }
