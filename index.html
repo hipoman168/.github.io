@@ -1,136 +1,68 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>TrueLife 真實人生｜人生選擇測驗</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <link
-        href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap"
-        rel="stylesheet"
-    >
-
-    <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="TrueLife 真實人生——每一個選擇，都定義真正的你。">
+  <title>TrueLife 真實人生｜人生選擇測驗</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=4">
 </head>
-
 <body>
+  <header class="site-header">
+    <div class="container">
+      <a class="brand" href="index.html">
+        <span class="brand-chinese">真實人生</span>
+        <span class="brand-english">TrueLife</span>
+      </a>
+    </div>
+  </header>
 
-<main class="container">
-
-    <header class="header">
-        <h1>TrueLife 真實人生</h1>
-        <p>每一個選擇，都定義真正的你。</p>
-    </header>
-
-    <section class="progress-section" id="progress-section">
-
-        <div class="progress-text">
-            <span id="current-question">1</span>
-            /
-            <span id="total-question">31</span>
+  <main class="home-page">
+    <section class="home-hero">
+      <div class="container home-hero-grid">
+        <div class="home-copy">
+          <p class="eyebrow">TrueLife Value Analysis</p>
+          <h1>每一個選擇，<br>都定義真正的你。</h1>
+          <p class="home-lead">31 個真實人生情境，帶你看見自己在同理、誠信、勇氣、審慎、自主與責任之間，如何做出取捨。</p>
+          <div class="home-actions">
+            <a class="primary-button" href="test.html">開始測驗</a>
+            <a class="secondary-button" href="#about">了解分析方式</a>
+          </div>
         </div>
 
-        <div class="progress-bar">
-            <div id="progress-fill" class="progress-fill"></div>
-        </div>
-
+        <aside class="home-preview" aria-label="六維分析預覽">
+          <div class="preview-orbit">
+            <span>同理</span><span>誠信</span><span>勇氣</span><span>審慎</span><span>自主</span><span>責任</span>
+            <strong>6D</strong>
+          </div>
+          <p>沒有標準答案，只有你在衝突中真正優先保護的價值。</p>
+        </aside>
+      </div>
     </section>
 
-    <section id="question-container">
-
-        <h2 id="question-title">
-            題目載入中……
-        </h2>
-
-        <p id="question-text">
-            請稍候……
-        </p>
-
-        <div class="button-group">
-
-            <button
-                id="option-a"
-                class="choice-btn"
-                type="button">
-                A
-            </button>
-
-            <button
-                id="option-b"
-                class="choice-btn"
-                type="button">
-                B
-            </button>
-
+    <section id="about" class="about-section">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">How It Works</p>
+          <h2>不是人格標籤，而是選擇輪廓</h2>
         </div>
-
+        <div class="feature-grid">
+          <article><span>01</span><h3>面對情境</h3><p>每題都是兩難選擇，不靠抽象形容詞判斷你。</p></article>
+          <article><span>02</span><h3>形成排序</h3><p>系統將你的選擇轉換成六個價值維度的相對傾向。</p></article>
+          <article><span>03</span><h3>看見張力</h3><p>結果包含雷達圖、六維分析與可實際反思的綜合評論。</p></article>
+        </div>
+      </div>
     </section>
+  </main>
 
-    <section id="result-container" hidden>
-
-        <div class="result-heading">
-            <p class="result-kicker">TrueLife Analysis</p>
-            <h1>你的人生選擇輪廓</h1>
-            <p>
-                這不是人格定型，而是你在這 31 個人生情境中，
-                所呈現出的價值排序與決策傾向。
-            </p>
-        </div>
-
-        <div class="result-summary-card">
-            <span>你的核心傾向</span>
-            <h2 id="result-type">分析中……</h2>
-            <p id="result-summary"></p>
-        </div>
-
-        <div class="chart-card">
-            <h2>六維價值雷達圖</h2>
-
-            <div class="chart-wrapper">
-                <canvas id="result-chart"></canvas>
-            </div>
-        </div>
-
-        <div class="dimension-section">
-            <h2>六項傾向解析</h2>
-            <div id="dimension-results" class="dimension-results"></div>
-        </div>
-
-        <div class="comment-card">
-            <h2>TrueLife 綜合評論</h2>
-            <p id="result-comment"></p>
-        </div>
-
-        <div class="result-notice">
-            本結果只反映你在本次情境中的選擇，
-            不代表永久人格，也不構成心理、醫療、法律或財務建議。
-        </div>
-
-        <div class="result-actions">
-
-            <button
-                id="restart-button"
-                class="primary-button"
-                type="button">
-                重新測驗
-            </button>
-
-            <a href="index.html" class="secondary-link">
-                返回首頁
-            </a>
-
-        </div>
-
-    </section>
-
-</main>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
-<script src="js/test.js"></script>
-
+  <footer class="site-footer">
+    <div class="container">
+      <p>TrueLife 真實人生</p>
+      <p>本測驗為情境式價值分析，不是臨床心理測驗或醫療診斷。</p>
+    </div>
+  </footer>
 </body>
 </html>
