@@ -2,278 +2,98 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
-  <meta
-    name="description"
-    content="TrueLife 真實人生——每一個選擇，都定義真正的你。"
-  >
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="TrueLife 真實人生——每一個選擇，都定義真正的你。">
   <title>TrueLife 真實人生｜人生選擇測驗</title>
-
-  <!-- 網站樣式 -->
-  <link rel="stylesheet" href="css/style.css?v=5">
+  <link rel="stylesheet" href="css/style.css?v=7">
 </head>
-
 <body>
-
-  <!-- 網站頂部 -->
   <header class="site-header">
     <div class="container">
-      <a class="brand" href="index.html">
+      <a class="brand" href="index.html" aria-label="返回 TrueLife 首頁">
         <span class="brand-chinese">真實人生</span>
         <span class="brand-english">TrueLife</span>
       </a>
     </div>
   </header>
 
-
   <main class="test-page">
-
-    <!-- 測驗標題 -->
-    <section class="test-hero">
+    <section id="progress-section" class="progress-section" aria-label="測驗進度">
       <div class="container">
-        <p class="eyebrow">TrueLife Analysis</p>
-
-        <h1>你會如何選擇？</h1>
-
-        <p>
-          每一個選擇，都定義真正的你。
+        <p class="progress-information">
+          第 <strong id="current-question">1</strong>
+          <span aria-hidden="true">／</span>
+          <strong id="total-question">31</strong> 題
         </p>
+        <div id="progress-fill" hidden></div>
       </div>
     </section>
 
-
-    <!-- 作答進度 -->
-    <section
-      id="progress-section"
-      class="progress-section"
-      aria-label="測驗進度"
-    >
+    <section id="question-container" class="question-section">
       <div class="container">
-
-        <div class="progress-information">
-          <span>
-            第
-            <strong id="current-question">1</strong>
-            題
-          </span>
-
-          <span>
-            共
-            <strong id="total-question">31</strong>
-            題
-          </span>
-        </div>
-
-        <div
-          class="progress-track"
-          role="progressbar"
-          aria-valuemin="0"
-          aria-valuemax="100"
-        >
-          <div
-            id="progress-fill"
-            class="progress-fill"
-          ></div>
-        </div>
-
-      </div>
-    </section>
-
-
-    <!-- 題目區 -->
-    <section
-      id="question-container"
-      class="question-section"
-    >
-      <div class="container">
-
         <article class="question-card">
-
-          <p class="question-label">
-            人生情境
-          </p>
-
-          <h2 id="question-title">
-            題目載入中
-          </h2>
-
-          <p id="question-text">
-            正在讀取題目……
-          </p>
+          <p class="question-label">人生情境</p>
+          <h1 id="question-title">題目載入中</h1>
+          <p id="question-text">正在讀取題目……</p>
 
           <div class="option-list">
-
-            <button
-              id="option-a"
-              class="option-button"
-              type="button"
-            >
-              A
-            </button>
-
-            <button
-              id="option-b"
-              class="option-button"
-              type="button"
-            >
-              B
-            </button>
-
+            <button id="option-a" class="option-button" type="button">A</button>
+            <button id="option-b" class="option-button" type="button">B</button>
           </div>
-
         </article>
-
       </div>
     </section>
 
-
-    <!-- 測驗結果區 -->
-    <section
-      id="result-container"
-      class="result-section"
-      hidden
-    >
+    <section id="result-container" class="result-section" hidden>
       <div class="container">
-
-        <!-- 核心結果 -->
         <article class="result-hero-card">
-
-          <p class="result-label">
-            你的價值傾向
-          </p>
-
-          <h2 id="result-type">
-            分析中……
-          </h2>
-
-          <p id="result-summary">
-            正在整理你的選擇……
-          </p>
-
+          <p class="result-label">你的價值傾向</p>
+          <h2 id="result-type">分析中……</h2>
+          <p id="result-summary">正在整理你的選擇……</p>
         </article>
 
-
-        <!-- 雷達圖 -->
         <section class="chart-section">
-
           <div class="section-heading">
-            <p class="eyebrow">
-              Six Dimensions
-            </p>
-
-            <h2>
-              六維價值分析
-            </h2>
+            <p class="eyebrow">Six Dimensions</p>
+            <h2>六維價值分析</h2>
           </div>
-
           <div class="chart-container">
-            <canvas
-              id="result-chart"
-              aria-label="六維價值雷達圖"
-              role="img"
-            ></canvas>
+            <canvas id="result-chart" aria-label="六維價值雷達圖" role="img"></canvas>
           </div>
-
         </section>
 
-
-        <!-- 六個維度的詳細結果 -->
         <section class="dimension-section">
-
           <div class="section-heading">
-            <p class="eyebrow">
-              Detailed Results
-            </p>
-
-            <h2>
-              六項分析結果
-            </h2>
+            <p class="eyebrow">Detailed Results</p>
+            <h2>六項分析結果</h2>
           </div>
-
-          <div
-            id="dimension-results"
-            class="dimension-results"
-          ></div>
-
+          <div id="dimension-results" class="dimension-results"></div>
         </section>
 
-
-        <!-- 綜合評論 -->
         <section class="comment-section">
-
           <article class="comment-card">
-
-            <p class="eyebrow">
-              TrueLife Comment
-            </p>
-
-            <h2>
-              綜合分析
-            </h2>
-
-            <p id="result-comment">
-              正在產生分析內容……
-            </p>
-
+            <p class="eyebrow">TrueLife Comment</p>
+            <h2>綜合分析</h2>
+            <p id="result-comment">正在產生分析內容……</p>
           </article>
-
         </section>
 
-
-        <!-- 重新測驗 -->
         <div class="result-actions">
-
-          <button
-            id="restart-button"
-            class="primary-button"
-            type="button"
-          >
-            重新測驗
-          </button>
-
-          <a
-            class="secondary-button"
-            href="index.html"
-          >
-            返回首頁
-          </a>
-
+          <button id="restart-button" class="primary-button" type="button">重新測驗</button>
+          <a class="secondary-button" href="index.html">返回首頁</a>
         </div>
-
       </div>
     </section>
-
   </main>
 
-
-  <!-- 網站底部 -->
   <footer class="site-footer">
     <div class="container">
-      <p>
-        TrueLife 真實人生
-      </p>
-
-      <p>
-        本測驗為情境式價值分析，不是臨床心理測驗或醫療診斷。
-      </p>
+      <p>TrueLife 真實人生</p>
+      <p>本測驗為情境式價值分析，不是臨床心理測驗或醫療診斷。</p>
     </div>
   </footer>
 
-
-  <!--
-    先載入 Chart.js。
-    test.js 執行 new Chart() 時才找得到 Chart。
-  -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
-
-  <!-- 再載入你的測驗程式 -->
   <script src="js/test.js?v=5"></script>
-
 </body>
 </html>
