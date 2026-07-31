@@ -857,7 +857,7 @@ body.result-active .test-page {
 
   .question-card h1 {
     margin: 0 0 8px;
-    font-size: clamp(1.55rem, 7vw, 2rem);
+    font-size: clamp(1.35rem, 6vw, 1.75rem);
     line-height: 1.25;
   }
 
