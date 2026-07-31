@@ -120,8 +120,8 @@ function showQuestion() {
 
   const currentQuestion = questions[currentQuestionIndex];
 
-  questionContainer.style.display = "block";
-  resultContainer.style.display = "none";
+  questionContainer.hidden = false;
+  resultContainer.hidden = true;
 
   questionTitle.textContent = currentQuestion.title;
   questionText.textContent = currentQuestion.question;
@@ -194,8 +194,8 @@ function updateProgressBar() {
 // ==============================
 
 function showCompletionScreen() {
-  questionContainer.style.display = "none";
-  resultContainer.style.display = "block";
+  questionContainer.hidden = true;
+  resultContainer.hidden = false;
 
   currentQuestionElement.textContent = questions.length;
   totalQuestionElement.textContent = questions.length;
@@ -253,8 +253,8 @@ function restartTest() {
   localStorage.removeItem("truelifeAnswers");
   localStorage.removeItem("truelifeCompletedAt");
 
-  questionContainer.style.display = "block";
-  resultContainer.style.display = "none";
+  questionContainer.hidden = false;
+  resultContainer.hidden = true;
 
   showQuestion();
 }
@@ -264,8 +264,8 @@ function restartTest() {
 // ==============================
 
 function showLoadError(message) {
-  questionContainer.style.display = "block";
-  resultContainer.style.display = "none";
+  questionContainer.hidden = false;
+  resultContainer.hidden = true;
 
   questionTitle.textContent = "題目載入失敗";
   questionText.textContent =
