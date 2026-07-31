@@ -882,3 +882,83 @@ body.result-active .test-page {
     line-height: 1.5;
   }
 }
+
+/* =========================================================
+   v10：簡潔測驗版面（手機優先）
+   ========================================================= */
+@media (max-width: 760px) {
+  .site-header {
+    padding: 13px 0;
+  }
+
+  .brand-chinese {
+    font-size: 20px;
+  }
+
+  .brand-english {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+  }
+
+  .progress-section {
+    padding: 10px 0 7px;
+  }
+
+  .progress-information {
+    font-size: 14px;
+  }
+
+  .progress-information strong {
+    font-size: 15px;
+  }
+
+  .question-section > .container {
+    width: min(calc(100% - 18px), 900px);
+  }
+
+  .question-card {
+    padding: 17px 16px 16px;
+    border-radius: 16px;
+    box-shadow: none;
+  }
+
+  .question-label {
+    margin-bottom: 6px;
+    font-size: 10px;
+  }
+
+  .question-card h1 {
+    margin-bottom: 8px;
+    font-size: 24px;
+    line-height: 1.25;
+  }
+
+  #question-text {
+    font-size: 15px;
+    line-height: 1.58;
+  }
+
+  .option-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 9px;
+    margin-top: 12px;
+  }
+
+  .option-button {
+    min-height: 56px;
+    padding: 12px 13px;
+    border-radius: 13px;
+    font-size: 14px;
+    line-height: 1.42;
+  }
+}
+
+@media (max-width: 390px) {
+  .option-list {
+    grid-template-columns: 1fr;
+  }
+
+  .option-button {
+    min-height: 52px;
+  }
+}
